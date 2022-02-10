@@ -25,6 +25,7 @@ jobs:
       with:
         installation_id: 23130859
         app_secret: ${{ env.APP_SECRET }}
+        github_token: ${{ github.toekn }}
 
     - name: Show access token
       run: |

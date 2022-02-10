@@ -7,6 +7,9 @@ inputs:
   app_secret:
     description: 'Github App secret'     
     required: true
+  github_token:
+    required: true
+    default: ${{ github.token }}
 
 outputs:
   token:
@@ -49,7 +52,7 @@ runs:
     name: Get access token
     shell: bash
     run: |
-      ACCESS_TOKEN=$(gh api -H "Accept: application/vnd.github.v3+json"  -H "Authorization: Bearer ${{ steps.jwtGenerator.outputs.jwt }}" -X POST app/installations/${{ github.event.inputs.installation_id }}/access_tokens | jq .token)
+      ACCESS_TOKEN=$(GH_TOKEN=${{ inputs.github_token }}  gh api -H "Accept: application/vnd.github.v3+json"  -H "Authorization: Bearer ${{ steps.jwtGenerator.outputs.jwt }}" -X POST app/installations/${{ github.event.inputs.installation_id }}/access_tokens | jq .token)
       echo "::set-output name=token::$ACCESS_TOKEN"
 
   
