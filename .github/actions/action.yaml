@@ -11,13 +11,14 @@ inputs:
 outputs:
   token:
     description: github app token
-    value: ${{ steps.authorize.outputs.token }}
+    value: ${{ steps.authorize.outputs.jwt }}
+
+env:
+  APP_SECRET: ${{ inputs.app_secret }}
+  APP_ID: '171296'
   
 runs:
   using: composite
-  env:
-    APP_SECRET: ${{ inputs.app_secret }}
-    APP_ID: '171296'
   steps:
   - name: Install Python dependencies
     uses: py-actions/py-dependency-install@v3
