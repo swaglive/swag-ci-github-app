@@ -37,7 +37,7 @@ runs:
       jwt = jwt.encode(
           {
               'iat': int(now.timestamp()),
-              'exp': int((now + datetime.timedelta(seconds=3600)).timestamp()), 
+              'exp': int((now + datetime.timedelta(seconds=600)).timestamp()), 
               'iss': '171296',
           },
           private_key,
