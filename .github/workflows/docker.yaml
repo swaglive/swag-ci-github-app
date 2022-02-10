@@ -22,7 +22,7 @@ jobs:
 
     - name: Mark check run success
       run: |
-        gh api -X PATCH /repos/${{github.repository}}/check-runs/${{steps.createCheckRun.output.runId}} -f status=completed -f conclusion=success
+        gh api -X PATCH /repos/${{github.repository}}/check-runs/${{steps.createCheckRun.outputs.runId}} -f status=completed -f conclusion=success
       
 
     
