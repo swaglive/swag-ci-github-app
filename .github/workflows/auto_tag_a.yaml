@@ -2,7 +2,11 @@ name: debug
 
 on:
   check_run:
-    types: [requested]
+    types: 
+    - created
+    - rerequested
+    - completed
+    - requested_action
 
 jobs:
   debug:
