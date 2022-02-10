@@ -20,7 +20,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: generate token
-      uses: ./.github/actions.token.yaml
+      uses: ./.github/actions
       with:
         installation_id: 23130859
         app_secret: ${{ github.env.APP_SECRET }}
