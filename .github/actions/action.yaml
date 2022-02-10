@@ -34,6 +34,7 @@ runs:
       import os
 
       now = datetime.datetime.utcnow()
+      secret = '${{ inputs.app_secret }}'
 
       jwt = jwt.encode(
           {
@@ -41,7 +42,7 @@ runs:
               'exp': int((now + datetime.timedelta(seconds=3600)).timestamp()), 
               'iss': '171296',
           },
-          '${{ inputs.app_secret }}',
+          secret,
           algorithm='RS256'
       )
 
