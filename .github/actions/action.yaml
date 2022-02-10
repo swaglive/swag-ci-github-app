@@ -47,7 +47,7 @@ runs:
     name: Get access token
     shell: bash
     run: |
-      ACCESS_TOKEN=$(gh api -X POST -H "Authorization:Bearer ${{ steps.jwtGenerator.outputs.jwt }}" app/installations/${{ github.event.inputs.installation_id }}/access_tokens | jq .token)
+      ACCESS_TOKEN=$(gh api -H "Authorization:Bearer ${{ steps.jwtGenerator.outputs.jwt }}" -X POST app/installations/${{ github.event.inputs.installation_id }}/access_tokens | jq .token)
       echo "::set-output name=token::$ACCESS_TOKEN"
 
   
