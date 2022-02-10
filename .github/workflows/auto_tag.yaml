@@ -9,6 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: echo
+      shell: bash
       run: | 
+        echo 123
         echo sha ${{ github.sha }}
         echo ref ${{ github.ref }}
