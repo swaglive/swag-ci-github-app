@@ -13,6 +13,7 @@ jobs:
       id: createCheckRun
       run: |
         runId=$(gh api -X POST /repos/${{github.repository}}/check-runs -f name=build -f head_sha=${{github.sha}} | jq .id)
+        echo $runId
         echo ::set-output name=runId::$runId
         
     - name: build
