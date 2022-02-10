@@ -1,0 +1,26 @@
+name: Build
+
+on:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+    - name: create check run
+      run: |
+        runId=$(gh api -X POST /repos/${{github.repository}}/check-runs -f name=build -f head_sha=${{github.sha}} | jq .id)
+        echo ::set-output name=runId::$runId
+        
+    - name: build
+      run: |
+        echo build
+
+    - name: Mark check run success
+      run: |
+        gh api -X PATCH /repos/${{github.repository}}/check-runs/${{steps.output.runId}} -f status=completed conclusion=success
+      
+
+    
