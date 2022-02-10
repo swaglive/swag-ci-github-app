@@ -13,17 +13,21 @@ jobs:
     env:
       APP_SECRET: ${{ secrets.APP_SECRET}}
     steps:
-    - name: 
+    - name: prepare jwt payload
+      id: jwt_payload
       run: |
-        echo hello $GPG_SECRET_KEY
-    - name:
+        now=$(date +%s)
+        exp=$((now+3600))
+        echo "::set-output name=iat::$now"
+        echo "::set-output exp=iat::$exp"
+        echo "::set-output exp=iat::nino"
+
+    - id: jwtGenerator
       uses: morzzz007/github-actions-jwt-generator@1.0.1
       with:
         secret: $APP_SECRET
-        payload: |
-        {
-          'iat': int(now.timestamp()),
-          'exp': int((now + datetime.timedelta(seconds=ttl)).timestamp()), 
-          'iss': client_id or os.environ['GITHUB_APP_ID'],
-        }
+        payload: '{"iat": 1644471232, "exp": 1644474832, "iss": client_id" }'
+
+    - name: DUMP Token
+        run: echo ${{steps.jwtGenerator.outputs.token}}
     
