@@ -2,7 +2,8 @@ name: debug
 
 on:
   check_suite:
-
+    types: [completed]
+    
 jobs:
   debug:
     runs-on: ubuntu-latest
