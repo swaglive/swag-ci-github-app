@@ -26,8 +26,10 @@ runs:
   #     print('${{ inputs.app_secret }}')
   #     print('bye')
 
-  - run: |
-    echo '${{ inputs.app_secret }}' > private-key.pem
+  - 
+    name: write-key
+    run: |
+      echo '${{ inputs.app_secret }}' > private-key.pem
 
   - name: gen_jwt
     shell: python
