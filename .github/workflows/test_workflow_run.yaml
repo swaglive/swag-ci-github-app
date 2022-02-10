@@ -12,8 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: debug
-      env:
-        event_object: ${{github.event}}
       run: |
         echo ${{ github.ref }}
         echo ${{ github.sha }}
