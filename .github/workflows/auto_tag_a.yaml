@@ -1,9 +1,9 @@
 name: debug
 
 on:
-  check_suite:
+  check_run:
     types: [completed]
-    
+
 jobs:
   debug:
     runs-on: ubuntu-latest
@@ -11,5 +11,6 @@ jobs:
     steps:
     - name: Show access token
       run: |
-        echo hello abc
+        echo ${{github.sha}}
+        echo ${{github.ref}}
       
