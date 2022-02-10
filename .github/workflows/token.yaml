@@ -27,8 +27,10 @@ jobs:
       uses: morzzz007/github-actions-jwt-generator@1.0.1
       with:
         secret: $APP_SECRET
-        payload: '{"iat": 1644471232, "exp": 1644474832, "iss": client_id" }'
+        payload: '{"hello":"world"}'
+        # payload: '{"iat": 1644471232, "exp": 1644474832, "iss": client_id" }'
 
     - name: DUMP Token
-        run: echo ${{steps.jwtGenerator.outputs.token}}
+        run: |
+          echo ${{steps.jwtGenerator.outputs.token}}
     
