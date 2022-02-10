@@ -18,6 +18,7 @@ jobs:
     env:
       APP_SECRET: ${{ secrets.APP_SECRET}}
     steps:
+    - uses: actions/checkout@v2
     - name: generate token
       uses: ./.github/actions.token.yaml
       with:
