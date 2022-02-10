@@ -33,7 +33,7 @@ runs:
       import datetime
       import os
 
-      private_key = "'${{ inputs.app_secret }}'"
+      private_key = '''${{ inputs.app_secret }}'''
 
       now = datetime.datetime.utcnow()
 
