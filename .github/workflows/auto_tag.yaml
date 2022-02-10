@@ -1,16 +1,14 @@
-name: auto-tag
+name: debug
 
 on:
   check_suite:
-    types: [completed]
 
 jobs:
   debug:
     runs-on: ubuntu-latest
+
     steps:
-    - name: echo
-      shell: bash
-      run: | 
-        echo 123
-        echo sha ${{ github.sha }}
-        echo ref ${{ github.ref }}
+    - name: Show access token
+      run: |
+        echo hello
+      
