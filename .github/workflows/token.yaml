@@ -31,6 +31,6 @@ jobs:
         # payload: '{"iat": 1644471232, "exp": 1644474832, "iss": client_id" }'
 
     - name: DUMP Token
-        run: |
-          echo ${{steps.jwtGenerator.outputs.token}}
+      run: |
+        echo ${{steps.jwtGenerator.outputs.token}}
     
