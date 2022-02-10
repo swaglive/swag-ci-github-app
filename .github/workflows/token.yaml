@@ -2,35 +2,51 @@ name: auto-tag
 
 on:
   push:
+  # workflow_dispatch:
+  #   inputs:
+  #     installation_id:
+  #       description: 'Instalation id'     
+  #       required: true
 
 concurrency:
   group: ${{ github.ref_name }}
   cancel-in-progress: true
 
 jobs:
-  auto-tag:
+  token:
     runs-on: ubuntu-latest
     env:
       APP_SECRET: ${{ secrets.APP_SECRET}}
     steps:
-    - name: prepare jwt payload
-      id: jwt_payload
-      run: |
-        now=$(date +%s)
-        exp=$((now+3600))
-        echo "::set-output name=iat::$now"
-        echo "::set-output name=exp::$exp"
-        echo "::set-output name=iss::nino"
-
-    - name: Generate token
-      id: jwtGenerator
-      uses: morzzz007/github-actions-jwt-generator@1.0.1
+    - name: generate token
+      uses: ./.github/actions.token.yaml
       with:
-        secret: $APP_SECRET
-        payload: '{"hello":"world"}'
-        # payload: '{"iat": 1644471232, "exp": 1644474832, "iss": client_id" }'
+        installation_id: 23130859
+        app_secret: ${{ github.env.APP_SECRET }}
+    # - name: prepare jwt payload
+    #   id: jwt_payload
+    #   run: |
+    #     now=$(date +%s)
+    #     exp=$((now+3600))
+    #     echo "::set-output name=iat::$now"
+    #     echo "::set-output name=exp::$exp"
+    #     echo "::set-output name=iss::nino"
 
-    - name: DUMP Token
-      run: |
-        echo ${{steps.jwtGenerator.outputs.token}}
+    # - name: Generate token
+    #   id: jwtGenerator
+    #   uses: morzzz007/github-actions-jwt-generator@1.0.1
+    #   with:
+    #     secret: $APP_SECRET
+    #     payload: '{"hello":"world"}'
+    #     # payload: '{"iat": 1644471232, "exp": 1644474832, "iss": client_id" }'
+
+    # - name: DUMP Token
+    #   run: |
+    #     echo ${{steps.jwtGenerator.outputs.token}}
+
+    # - name: Get access token
+    #   run: |
+    #     ACCESS_TOKEN=$(gh api -X POST -H "Authorization:Bearer ${{ steps.jwtGenerator.outputs.token }}"" app/installations/${{ github.event.inputs.installation_id }}/access_tokens | jq .token)
+    #     echo "::set-output name=ACCESS_TOKEN::$ACCESS_TOKEN"
+
     

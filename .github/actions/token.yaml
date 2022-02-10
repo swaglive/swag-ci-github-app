@@ -1,0 +1,53 @@
+name: Create Access Token
+description: Create Access Token
+inputs:
+  installation_id:
+    description: 'Instalation id'     
+    required: true
+  app_secret:
+    description: 'Github App secret'     
+    required: true
+
+outputs:
+  token:
+    description: github app token
+    value: ${{ steps.authorize.outputs.token }}
+  
+runs:
+  using: composite
+  steps:
+  - name: Install Python dependencies
+    uses: py-actions/py-dependency-install@v3
+
+  - name: test
+    shell: python
+    run: |
+      import jwt
+  # - name: prepare jwt payload
+  #   id: jwt_payload
+  #   run: |
+  #     now=$(date +%s)
+  #     exp=$((now+3600))
+  #     echo "::set-output name=iat::$now"
+  #     echo "::set-output name=exp::$exp"
+  #     echo "::set-output name=iss::nino"
+
+  # - name: Generate token
+  #   id: jwtGenerator
+  #   uses: morzzz007/github-actions-jwt-generator@1.0.1
+  #   with:
+  #     secret: $APP_SECRET
+  #     payload: '{"hello":"world"}'
+  #     # payload: '{"iat": 1644471232, "exp": 1644474832, "iss": client_id" }'
+
+  # - name: DUMP Token
+  #   run: |
+  #     echo ${{steps.jwtGenerator.outputs.token}}
+
+  # - id: authorize
+  #   name: Get access token
+  #   run: |
+  #     ACCESS_TOKEN=$(gh api -X POST -H "Authorization:Bearer ${{ steps.jwtGenerator.outputs.token }}"" app/installations/${{ github.event.inputs.installation_id }}/access_tokens | jq .token)
+  #     echo "::set-output name=token::$ACCESS_TOKEN"
+
+  
