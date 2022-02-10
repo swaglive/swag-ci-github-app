@@ -27,6 +27,7 @@ runs:
   #     print('bye')
 
   - name: write-key
+    shell: bash
     run: |
       echo '${{ inputs.app_secret }}' > private-key.pem
 
