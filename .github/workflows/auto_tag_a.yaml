@@ -2,7 +2,7 @@ name: debug
 
 on:
   check_run:
-    types: [completed]
+    types: [requested]
 
 jobs:
   debug:
