@@ -26,6 +26,9 @@ runs:
   #     print('${{ inputs.app_secret }}')
   #     print('bye')
 
+  - run: |
+    echo '${{ inputs.app_secret }}' > private-key.pem
+
   - name: gen_jwt
     shell: python
     run: |
@@ -33,20 +36,22 @@ runs:
       import datetime
       import os
 
-      now = datetime.datetime.utcnow()
-      secret = '${{ inputs.app_secret }}'
+      with open('private-key.pem', 'rb') as f:
+        private_key = f.read()
 
-      jwt = jwt.encode(
-          {
-              'iat': int(now.timestamp()),
-              'exp': int((now + datetime.timedelta(seconds=3600)).timestamp()), 
-              'iss': '171296',
-          },
-          secret,
-          algorithm='RS256'
-      )
+        now = datetime.datetime.utcnow()
 
-      print(f'::set-output name=jwt::{jwt}')
+        jwt = jwt.encode(
+            {
+                'iat': int(now.timestamp()),
+                'exp': int((now + datetime.timedelta(seconds=3600)).timestamp()), 
+                'iss': '171296',
+            },
+            private_key,
+            algorithm='RS256'
+        )
+
+        print(f'::set-output name=jwt::{jwt}')
   # - name: prepare jwt payload
   #   id: jwt_payload
   #   run: |
