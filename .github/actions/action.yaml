@@ -12,9 +12,6 @@ outputs:
   token:
     description: github app token
     value: ${{ steps.authorize.outputs.jwt }}
-
-env:
-  APP_ID: '171296'
   
 runs:
   using: composite
@@ -35,7 +32,7 @@ runs:
           {
               'iat': int(now.timestamp()),
               'exp': int((now + datetime.timedelta(seconds=3600)).timestamp()), 
-              'iss': os.environ['APP_ID'],
+              'iss': '171296',
           },
           '${{ inputs.app_secret }}',
           algorithm='RS256'
