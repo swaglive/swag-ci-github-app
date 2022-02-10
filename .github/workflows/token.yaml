@@ -22,7 +22,8 @@ jobs:
         echo "::set-output exp=iat::$exp"
         echo "::set-output exp=iat::nino"
 
-    - id: jwtGenerator
+    - name: Generate token
+      id: jwtGenerator
       uses: morzzz007/github-actions-jwt-generator@1.0.1
       with:
         secret: $APP_SECRET
