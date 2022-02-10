@@ -14,7 +14,6 @@ outputs:
     value: ${{ steps.authorize.outputs.jwt }}
 
 env:
-  APP_SECRET: ${{ inputs.app_secret }}
   APP_ID: '171296'
   
 runs:
@@ -38,7 +37,7 @@ runs:
               'exp': int((now + datetime.timedelta(seconds=3600)).timestamp()), 
               'iss': os.environ['APP_ID'],
           },
-          os.environ['APP_SECRET'],
+          '${{ inputs.app_secret }}',
           algorithm='RS256'
       )
 
