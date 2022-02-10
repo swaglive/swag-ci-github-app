@@ -17,8 +17,6 @@ outputs:
     value: ${{ steps.authorize.outputs.token }}
   
 runs:
-  env:
-    GH_TOKEN: ${{ github.token }}
   using: composite
   steps:
   - name: Install Python dependencies
