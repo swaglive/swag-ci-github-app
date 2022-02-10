@@ -19,8 +19,8 @@ jobs:
         now=$(date +%s)
         exp=$((now+3600))
         echo "::set-output name=iat::$now"
-        echo "::set-output exp=exp::$exp"
-        echo "::set-output exp=iss::nino"
+        echo "::set-output name=exp::$exp"
+        echo "::set-output name=iss::nino"
 
     - name: Generate token
       id: jwtGenerator
