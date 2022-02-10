@@ -22,23 +22,30 @@ runs:
   - name: test
     shell: python
     run: |
-      import jwt
-      import datetime
-      import os
+      print('hello')
+      print('${{ inputs.app_secret }}')
+      print('bye')
 
-      now = datetime.datetime.utcnow()
+  # - name: test
+  #   shell: python
+  #   run: |
+  #     import jwt
+  #     import datetime
+  #     import os
 
-      jwt = jwt.encode(
-          {
-              'iat': int(now.timestamp()),
-              'exp': int((now + datetime.timedelta(seconds=3600)).timestamp()), 
-              'iss': '171296',
-          },
-          '${{ inputs.app_secret }}',
-          algorithm='RS256'
-      )
+  #     now = datetime.datetime.utcnow()
 
-      print(f'::set-output name=jwt::{jwt}')
+  #     jwt = jwt.encode(
+  #         {
+  #             'iat': int(now.timestamp()),
+  #             'exp': int((now + datetime.timedelta(seconds=3600)).timestamp()), 
+  #             'iss': '171296',
+  #         },
+  #         '${{ inputs.app_secret }}',
+  #         algorithm='RS256'
+  #     )
+
+  #     print(f'::set-output name=jwt::{jwt}')
   # - name: prepare jwt payload
   #   id: jwt_payload
   #   run: |
