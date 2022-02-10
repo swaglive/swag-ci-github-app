@@ -23,7 +23,7 @@ jobs:
       uses: ./.github/actions
       with:
         installation_id: 23130859
-        app_secret: ${{ github.env.APP_SECRET }}
+        app_secret: ${{ env.APP_SECRET }}
     # - name: prepare jwt payload
     #   id: jwt_payload
     #   run: |
