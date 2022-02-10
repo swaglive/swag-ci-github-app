@@ -10,6 +10,7 @@ jobs:
       GH_TOKEN: ${{ github.token }}
     steps:
     - name: create check run
+      id: createCheckRun
       run: |
         runId=$(gh api -X POST /repos/${{github.repository}}/check-runs -f name=build -f head_sha=${{github.sha}} | jq .id)
         echo ::set-output name=runId::$runId
@@ -20,7 +21,7 @@ jobs:
 
     - name: Mark check run success
       run: |
-        gh api -X PATCH /repos/${{github.repository}}/check-runs/${{steps.output.runId}} -f status=completed -f conclusion=success
+        gh api -X PATCH /repos/${{github.repository}}/check-runs/${{steps.createCheckRun.output.runId}} -f status=completed -f conclusion=success
       
 
     
