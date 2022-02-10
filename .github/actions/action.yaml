@@ -15,6 +15,9 @@ outputs:
   
 runs:
   using: composite
+  env:
+    APP_SECRET: ${{ inputs.app_secret }}
+    APP_ID: '171296'
   steps:
   - name: Install Python dependencies
     uses: py-actions/py-dependency-install@v3
@@ -23,6 +26,22 @@ runs:
     shell: python
     run: |
       import jwt
+      import datetime
+      import os
+
+      now = datetime.datetime.utcnow()
+
+      jwt = jwt.encode(
+          {
+              'iat': int(now.timestamp()),
+              'exp': int((now + datetime.timedelta(seconds=3600)).timestamp()), 
+              'iss': os.environ['APP_ID'],
+          },
+          os.environ['APP_SECRET'],
+          algorithm='RS256'
+      )
+
+      print(f'::set-output name=jwt::{jwt}')
   # - name: prepare jwt payload
   #   id: jwt_payload
   #   run: |
