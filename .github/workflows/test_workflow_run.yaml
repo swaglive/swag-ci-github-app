@@ -1,0 +1,29 @@
+name: Debug workflow_run
+
+on:
+  workflow_run:
+    workflows:
+      - Build
+    
+    types: [completed]
+
+jobs:
+  hello:
+    runs-on: ubuntu-latest
+    steps:
+    - name: debug
+      run: |
+        echo ${{ github.ref }}
+        echo ${{ github.sha }}
+        # REF: https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#workflow_run
+        echo ${{github.event.action}}
+
+  world:
+    runs-on: ubuntu-latest
+    needs: [hello]
+    steps:
+    - run: |
+        echo job world start
+        sleep 5
+        echo job word end
+  
