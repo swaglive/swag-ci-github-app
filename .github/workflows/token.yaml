@@ -1,0 +1,29 @@
+name: auto-tag
+
+on:
+  push:
+
+concurrency:
+  group: ${{ github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  auto-tag:
+    runs-on: ubuntu-latest
+    env:
+      APP_SECRET: ${{ secrets.APP_SECRET}}
+    steps:
+    - name: 
+      run: |
+        echo hello $GPG_SECRET_KEY
+    - name:
+      uses: morzzz007/github-actions-jwt-generator@1.0.1
+      with:
+        secret: $APP_SECRET
+        payload: |
+        {
+          'iat': int(now.timestamp()),
+          'exp': int((now + datetime.timedelta(seconds=ttl)).timestamp()), 
+          'iss': client_id or os.environ['GITHUB_APP_ID'],
+        }
+    
