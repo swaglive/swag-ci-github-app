@@ -11,7 +11,7 @@ inputs:
 outputs:
   token:
     description: github app token
-    value: ${{ steps.authorize.outputs.jwt }}
+    value: ${{ steps.authorize.outputs.token }}
   
 runs:
   using: composite
