@@ -1,0 +1,36 @@
+name: Access Token
+
+on:
+  push:
+  # workflow_dispatch:
+  #   inputs:
+  #     installation_id:
+  #       description: 'Instalation id'     
+  #       required: true
+
+concurrency:
+  group: ${{ github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  token:
+    runs-on: ubuntu-latest
+    env:
+      APP_SECRET: ${{ secrets.APP_SECRET}}
+    steps:
+    - uses: actions/checkout@v2
+    - name: generate jwt
+      id: tokenGenerator
+      uses: ./.github/actions
+      with:
+        installation_id: 23130859
+        app_secret: ${{ env.APP_SECRET }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Show access token
+      run: |
+        echo hello
+        echo ${{ steps.tokenGenerator.token }}
+      
+
+    

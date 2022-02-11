@@ -1,0 +1,56 @@
+name: Create Access Token
+description: Create Access Token
+inputs:
+  installation_id:
+    description: 'Instalation id'     
+    required: true
+  app_secret:
+    description: 'Github App secret'     
+    required: true
+  github_token:
+    required: true
+    default: ${{ github.token }}
+
+outputs:
+  token:
+    description: github app token
+    value: ${{ steps.authorize.outputs.token }}
+  
+runs:
+  using: composite
+  steps:
+  - name: Install Python dependencies
+    uses: py-actions/py-dependency-install@v3
+
+  - name: gen_jwt
+    id: jwtGenerator
+    shell: python
+    run: |
+      import jwt
+      import datetime
+      import os
+
+      private_key = '''${{ inputs.app_secret }}'''
+
+      now = datetime.datetime.utcnow()
+
+      jwt = jwt.encode(
+          {
+              'iat': int(now.timestamp()),
+              'exp': int((now + datetime.timedelta(seconds=600)).timestamp()), 
+              'iss': '171296',
+          },
+          private_key,
+          algorithm='RS256'
+      )
+
+      print(f'::set-output name=jwt::{jwt}')
+  
+  - id: authorize
+    name: Get access token
+    shell: bash
+    run: |
+      ACCESS_TOKEN=$(GH_TOKEN=${{ inputs.github_token }}  gh api -H "Accept: application/vnd.github.v3+json"  -H "Authorization: Bearer ${{ steps.jwtGenerator.outputs.jwt }}" -X POST app/installations/${{ inputs.installation_id }}/access_tokens | jq .token)
+      echo "::set-output name=token::$ACCESS_TOKEN"
+
+  

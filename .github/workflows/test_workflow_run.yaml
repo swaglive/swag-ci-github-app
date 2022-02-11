@@ -5,7 +5,7 @@ on:
     workflows:
       - Build
     
-    types: [completed]
+    types: [completed, requested]
 
 jobs:
   hello:
@@ -13,6 +13,8 @@ jobs:
     steps:
     - name: debug
       run: |
+        echo $(pwd)
+        echo hello world > test.txt
         echo ${{ github.ref }}
         echo ${{ github.sha }}
         # REF: https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#workflow_run
@@ -23,7 +25,8 @@ jobs:
     needs: [hello]
     steps:
     - run: |
-        echo job world start
+        echo $(pwd)
+        cat test.txt
         sleep 5
         echo job word end
   

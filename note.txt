@@ -1,0 +1,20 @@
+# Tasks
+- auto tag with github-app token
+- change deployment create / tag job on check suit
+
+```
+commit push [build] -> check suit pass 
+-> auto tag -> release
+-> deployment
+```
+
+- cluster check if deploy
+    - tag GPG verify
+    - tag create by github-app
+
+# Double check
+github-app token credential grunality
+- content read/write -> /repos/{owner}/{repo}/dispatches
+
+aaa
+
