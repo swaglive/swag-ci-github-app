@@ -13,6 +13,7 @@ jobs:
     steps:
     - name: debug
       run: |
+        echo hello world > test.txt
         echo ${{ github.ref }}
         echo ${{ github.sha }}
         # REF: https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#workflow_run
@@ -24,6 +25,7 @@ jobs:
     steps:
     - run: |
         echo job world start
+        cat test.txt
         sleep 5
         echo job word end
   
