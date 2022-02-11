@@ -1,0 +1,16 @@
+name: Test check_suit
+
+on:
+  check_suite:
+    types: [completed]
+
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: debug
+      run: |
+        echo ${{github.sha}}
+        echo ${{github.ref}}
+      
