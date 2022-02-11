@@ -13,6 +13,7 @@ jobs:
     steps:
     - name: debug
       run: |
+        echo $(pwd)
         echo hello world > test.txt
         echo ${{ github.ref }}
         echo ${{ github.sha }}
@@ -24,7 +25,7 @@ jobs:
     needs: [hello]
     steps:
     - run: |
-        echo job world start
+        echo $(pwd)
         cat test.txt
         sleep 5
         echo job word end
